@@ -2,6 +2,7 @@ package com.rokaly.sge.controller;
 
 import com.rokaly.sge.dto.ForkliftDTO;
 import com.rokaly.sge.dto.GetForkliftDTO;
+import com.rokaly.sge.dto.PutForkliftDTO;
 import com.rokaly.sge.model.Forklift;
 import com.rokaly.sge.repository.ForkliftRepository;
 import jakarta.transaction.Transactional;
@@ -35,5 +36,13 @@ public class ForkliftController {
     public ResponseEntity<Page<GetForkliftDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"}) Pageable pagination) {
         Page<GetForkliftDTO> page = repository.findAll(pagination).map(GetForkliftDTO::new);
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<GetForkliftDTO> put(@RequestBody PutForkliftDTO data) {
+        Forklift forklift = repository.getReferenceById(data.id());
+        forklift.updateData(data);
+        return ResponseEntity.ok(new GetForkliftDTO(forklift));
     }
 }
