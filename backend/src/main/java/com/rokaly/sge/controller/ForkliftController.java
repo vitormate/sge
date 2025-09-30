@@ -1,15 +1,16 @@
 package com.rokaly.sge.controller;
 
 import com.rokaly.sge.dto.ForkliftDTO;
+import com.rokaly.sge.dto.GetForkliftDTO;
 import com.rokaly.sge.model.Forklift;
 import com.rokaly.sge.repository.ForkliftRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -28,5 +29,11 @@ public class ForkliftController {
         var uri = uriBuilder.path("/forklifts/{id}").buildAndExpand(forklift.getId()).toUri();
         ForkliftDTO dto = new ForkliftDTO(data);
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<GetForkliftDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"}) Pageable pagination) {
+        Page<GetForkliftDTO> page = repository.findAll(pagination).map(GetForkliftDTO::new);
+        return ResponseEntity.ok(page);
     }
 }
