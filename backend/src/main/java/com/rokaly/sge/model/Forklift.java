@@ -30,6 +30,9 @@ public class Forklift {
         this.status = data.status();
     }
 
+    public Forklift() {
+    }
+
     public Long getId() {
         return id;
     }
