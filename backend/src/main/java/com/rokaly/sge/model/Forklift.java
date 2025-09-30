@@ -1,6 +1,7 @@
 package com.rokaly.sge.model;
 
 import com.rokaly.sge.dto.ForkliftDTO;
+import com.rokaly.sge.dto.PutForkliftDTO;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -87,5 +88,14 @@ public class Forklift {
 
     public void setHistory(List<History> history) {
         this.history = history;
+    }
+
+    public void updateData(PutForkliftDTO data) {
+        if (data.hourMeter() != null) {
+            this.hourMeter = data.hourMeter();
+        }
+        if (data.type() != null) {
+            this.type = data.type();
+        }
     }
 }
