@@ -98,4 +98,8 @@ public class Forklift {
             this.type = data.type();
         }
     }
+
+    public void deleteForklift() {
+        this.status = Status.INATIVA;
+    }
 }

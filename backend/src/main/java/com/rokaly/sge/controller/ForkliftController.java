@@ -45,4 +45,12 @@ public class ForkliftController {
         forklift.updateData(data);
         return ResponseEntity.ok(new GetForkliftDTO(forklift));
     }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Forklift forklift = repository.getReferenceById(id);
+        forklift.deleteForklift();
+        return ResponseEntity.noContent().build();
+    }
 }
