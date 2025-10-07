@@ -21,6 +21,9 @@ public class History {
         this.forklift = forklift;
     }
 
+    public History() {
+    }
+
     public Long getId() {
         return id;
     }
