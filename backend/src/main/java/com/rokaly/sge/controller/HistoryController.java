@@ -30,6 +30,7 @@ public class HistoryController {
     @Transactional
     public ResponseEntity<HistoryDTO> create(@RequestBody HistoryDTO data, UriComponentsBuilder uriBuilder) {
         Forklift forklift = repositoryForklift.getReferenceById(data.idForklift());
+        forklift.maintenance();
         History history = new History(data, forklift);
         repository.save(history);
 

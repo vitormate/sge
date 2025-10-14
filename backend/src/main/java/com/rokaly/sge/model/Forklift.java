@@ -107,5 +107,7 @@ public class Forklift {
         this.status = Status.ATIVA;
     }
 
-
+    public void maintenance() {
+        this.status = Status.MANUTENCAO;
+    }
 }
