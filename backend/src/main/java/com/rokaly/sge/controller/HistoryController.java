@@ -30,6 +30,7 @@ public class HistoryController {
     @Transactional
     public ResponseEntity<HistoryDTO> create(@RequestBody HistoryDTO data, UriComponentsBuilder uriBuilder) {
         Forklift forklift = repositoryForklift.getReferenceById(data.idForklift());
+        forklift.maintenance();
         History history = new History(data, forklift);
         repository.save(history);
 
@@ -42,5 +43,13 @@ public class HistoryController {
     public ResponseEntity<Page<GetHistoryDTO>> read(@PageableDefault(size = 10, page = 0, sort = {"id"}) Pageable pagination) {
         Page<GetHistoryDTO> page = repository.findAll(pagination).map(GetHistoryDTO::new);
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<GetForkliftDTO> leftMaintenance(@RequestBody GetForkliftDTO dados) {
+        Forklift forklift = repositoryForklift.getReferenceById(dados.id());
+        forklift.activate();
+        return ResponseEntity.ok(new GetForkliftDTO(forklift));
     }
 }
