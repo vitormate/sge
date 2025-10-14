@@ -43,4 +43,12 @@ public class HistoryController {
         Page<GetHistoryDTO> page = repository.findAll(pagination).map(GetHistoryDTO::new);
         return ResponseEntity.ok(page);
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<GetForkliftDTO> leftMaintenance(@RequestBody GetForkliftDTO dados) {
+        Forklift forklift = repositoryForklift.getReferenceById(dados.id());
+        forklift.activate();
+        return ResponseEntity.ok(new GetForkliftDTO(forklift));
+    }
 }

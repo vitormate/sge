@@ -102,4 +102,10 @@ public class Forklift {
     public void deleteForklift() {
         this.status = Status.INATIVA;
     }
+
+    public void activate() {
+        this.status = Status.ATIVA;
+    }
+
+
 }
